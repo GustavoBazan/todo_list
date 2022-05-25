@@ -4,24 +4,24 @@ module.exports = (app)=>{
         res.render('login.ejs')
     })
 
-    //abrir a view atividades
-    app.post('/login',(req,res)=>{
-        res.render('atividades.ejs')
-    })
-
     // abrir a view atividades
     app.post('/login',async(req,res)=>{
-        // conectar comobanco de dados
-        const conexao = require('../ config/database')()
+        // conectar com o banco de dados
+        const conexao = require('../config/database')()
         // importar a model usuários
         const usuarios = require('../models/usuarios')
         //procurar pelo endereço de email
-        var procurar = await usuarios.findOne({email:body.email})
+        var procurar = await usuarios.findOne({email:req.body.email})
         if(!procurar){
             res.send('Email não cadastrado!!')
         }
-
-        res.render('atividades.ejs')
-
-})
+        //comparar senha digitada armazenada
+        const bcrypt = require('bcryptjs')
+        var comparar = await bcrypt.compare(req.body.senha,procurar.senha)
+        if(!comparar) {
+            return res.send("Senha incorreta")
+        } 
+        //abrir a view atividades e enviar nome e id
+        res.render('atividades.ejs',{nome:procurar.nome,id:procurar._id})
+    })
 }
