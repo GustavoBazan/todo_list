@@ -13,7 +13,7 @@
         <h1 class="text-center">Lista de Atividades</h1>
         <h3 class="text-center">Usuário: <%=nome%></h3>
         <div class="row">
-            <div class="col-sm text-center">
+            <div class="col-sm text-center order-2">
                 <h3 class="text-center">Cadastrar</h3>
                 <form action="/atividades" method="post" class="form-control">
                     <input type="hidden" name="id" value="<%=id%>">
@@ -53,8 +53,9 @@
                     <input type="submit" value="Gravar" class="btn btn-danger">
                 </form>
     </div>
-    <div class="col-sm text-center">
+    <div class="col-sm text-center order-1">
         <h3>Atividades cadastradas</h3>
+        <h4>Ativas</h4>
         <% for (var n = 0; n < dados.length; n++){%>
         <div class="card">
             <%const weekDay = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]%>
@@ -69,13 +70,60 @@
             </div>
             <div class="card-footer">
                 <div class="input-group">
-                    <input type="button" value="Entregue" class="btn btn-success form-control">
+                    <input type="button" value="Entregue" class="btn btn-success form-control" onclick="(window.location.href='/entregue?id=<%=dados[n]._id%>')">
                     <input type="button" value="Alterar" class="btn btn-warning form-control">
                     <input type="button" value="Excluir" class="btn btn-danger form-control" onclick="(window.location.href='/excluir?id=<%=dados[n]._id%>')">
                 </div>
             </div>
         </div>
         <%}%>
+
+        <h4>Entregues</h4>
+        <% for (var n = 0; n < dadose.length; n++){%>
+        <div class="card">
+            <%const weekDay = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]%>
+            <%const month = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]%>
+            <div class="card-header bg-dark text-light">Data: <%=weekDay[dadose[n].data.getDay()]%> <%=dadose[n].data.getDate()+1%> - <%=month[dadose[n].data.getMonth()]%></div>
+            <div class="card-body">
+                <div class="card-title">Tipo: <%=dadose[n].tipo%></div>
+                <div class="card-title">Disciplina: <%=dadose[n].disciplina%></div>
+                <div class="card-subtitle">Entrega: <%=dadose[n].entrega%></div>
+                <div class="card-text">Orientações: <%=dadose[n].instrucoes%></div>
+
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="button" value="Entregue" class="btn btn-success form-control" onclick="(window.location.href='/entregue?id=<%=dadose[n]._id%>')">
+                    <input type="button" value="Alterar" class="btn btn-warning form-control">
+                    <input type="button" value="Excluir" class="btn btn-danger form-control" onclick="(window.location.href='/excluir?id=<%=dadose[n]._id%>')">
+                </div>
+            </div>
+        </div>
+        <%}%>
+
+        <h4>Excluídas</h4>
+        <% for (var n = 0; n < dadosx.length; n++){%>
+        <div class="card">
+            <%const weekDay = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sab", "Dom"]%>
+            <%const month = ["Jan", "Fev", "Mar", "Abr", "Mai", "Jun", "Jul", "Ago", "Set", "Out", "Nov", "Dez"]%>
+            <div class="card-header bg-dark text-light">Data: <%=weekDay[dadosx[n].data.getDay()]%> <%=dadosx[n].data.getDate()+1%> - <%=month[dadosx[n].data.getMonth()]%></div>
+            <div class="card-body">
+                <div class="card-title">Tipo: <%=dadosx[n].tipo%></div>
+                <div class="card-title">Disciplina: <%=dadosx[n].disciplina%></div>
+                <div class="card-subtitle">Entrega: <%=dadosx[n].entrega%></div>
+                <div class="card-text">Orientações: <%=dadosx[n].instrucoes%></div>
+
+            </div>
+            <div class="card-footer">
+                <div class="input-group">
+                    <input type="button" value="Entregue" class="btn btn-success form-control" onclick="(window.location.href='/entregue?id=<%=dadosx[n]._id%>')">
+                    <input type="button" value="Alterar" class="btn btn-warning form-control">
+                    <input type="button" value="Excluir" class="btn btn-danger form-control" onclick="(window.location.href='/excluir?id=<%=dadosx[n]._id%>')">
+                </div>
+            </div>
+        </div>
+        <%}%>
+
     </div>
 </body>
 </html>

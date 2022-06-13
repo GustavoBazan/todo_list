@@ -10,9 +10,17 @@ module.exports = (app)=>{
         var user = await usuarios.findOne({_id:id})
 
         //buscar todas as atividades desse usuário
-        var buscar = await atividades.find({usuario:id})
+        var abertas = await atividades.find({usuario:id, status:0}).sort({data:1})
+
+        //buscar todas as atividades desse usuário
+        var entregues = await atividades.find({usuario:id, status:1}).sort({data:1})
+
+        //buscar todas as atividades desse usuário
+        var excluidas = await atividades.find({usuario:id, status:2}).sort({data:1})
+        
         //console.log(buscar)
-        res.render('atividades.ejs',{id:user._id,nome:user.nome,dados:buscar})
+        //res.render('atividades.ejs',{id:user._id,nome:user.nome,dados:abertas,dadose:entregues,dadosx:excluidas})
+        res.render('atividades2.ejs',{id:user._id,nome:user.nome,dados:abertas,dadose:entregues,dadosx:excluidas})
     })
 
     app.post('/atividades',async(req,res)=>{
@@ -41,9 +49,19 @@ module.exports = (app)=>{
     app.get("/excluir",async(req,res)=>{
         //recuperar o parâmetro id da barra de endereço
         var id = req.query.id
-        var excluir = await atividades.findOneAndRemove({_id:id})
+        var excluir = await atividades.findOneAndUpdate({_id:id},{status:2})
         //voltar para a página atividades
         //redirecionar para a rota atividades
         res.redirect('/atividades?id=' + excluir.usuario)
+    })
+
+    //entrega atividades
+    app.get("/entregue",async(req,res)=>{
+        //recuperar o parâmetro id da barra de endereço
+        var id = req.query.id
+        var entregue = await atividades.findOneAndUpdate({_id:id},{status:1})
+        //voltar para a página atividades
+        //redirecionar para a rota atividades
+        res.redirect('/atividades?id=' + entregue.usuario)
     })
 }
