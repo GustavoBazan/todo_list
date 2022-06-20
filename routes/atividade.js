@@ -71,4 +71,17 @@ module.exports = (app)=>{
         //redirecionar para a rota atividades
         res.redirect('/atividades?id=' + desfazer.usuario)
     })
+
+    app.get('/alterar',async(req,res)=>{
+        //capturar o id (atividade) da barra de endereço
+        var id = req.query.id
+
+        //buscar a atividade que será alterada
+        var alterar = await atividades.findOne({_id:id})
+
+        //buscar o nome na collection usuarios
+        var user = await usuarios.findOne({_id:alterar.usuario})
+
+        res.render('alterar.ejs',{id:user._id,nome:user.nome,dados:alterar})
+    })
 }
