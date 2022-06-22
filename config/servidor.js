@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 
 //definir a porta do servidor local
-const porta = 3535 || process.env.PORT
+const porta = process.env.PORT
 
 //definir a pasta dos arquivos estaticos (css, imagens, jquery)
 app.use(express.static('./assets'))
