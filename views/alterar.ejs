@@ -17,11 +17,13 @@
         <div class="row">
             <div class="col-sm text-center order-2">
                 <h3 class="text-center">Alterar</h3>
-                <form action="/alterar" method="post" class="form-control">
+                <form action="" method="post" class="form-control">
                     <input type="hidden" name="id" value="<%=id%>">
                     <input type="hidden" name="nome" value="<%=nome%>">
+                    <input type="hidden" name="id_a" value="<%=dados._id%>">
                     <label for="data" class="form-control" id="floatinginput" placeholder="Data" required>Data da Atividade</label>
                     <input type="date" name="data" id="floatingSelect" class="form-control" value="<%=dados.data.toISOString().slice(0,10)%>">
+                    <label for="floatingSelect">Tipo de Atividade:</label>
 
                     <div class="form-floating">
                         <select name="tipo" id="floatingSelect" class="form-control">
@@ -31,7 +33,6 @@
                             <option value="3" <%=dados.tipo=="3"?"selected":""%>>REC</option>
                             <option value="4" <%=dados.tipo=="4"?"selected":""%>>Exame</option>
                         </select>
-                        <label for="floatingSelect">Tipo de Atividade:</label>
                     </div>
                     
                     <div class="form-floating">
@@ -52,6 +53,7 @@
 
                     <label for="" class="form-control">Orientações</label>
                     <textarea name="orientacao" id="" cols="30" rows="10" class="form-control"><%=dados.instrucoes%></textarea>
+                    <input type="button" value="Cancelar" class="btn btn-outline-info" onclick="history.back()">
                     <input type="submit" value="Alterar" class="btn btn-outline-danger">
                 </form>
            </div>

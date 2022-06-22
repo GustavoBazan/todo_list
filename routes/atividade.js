@@ -84,4 +84,22 @@ module.exports = (app)=>{
 
         res.render('alterar.ejs',{id:user._id,nome:user.nome,dados:alterar})
     })
+
+    //Criar a rota para gravar as alterações na atividade
+    app.post('/alterar',async(req,res)=>{
+        //quais são as informações digitadas?
+        var infos = req.body
+        console.log(infos)
+        //gravar as alterações na collection atividades
+        var gravar = await atividades.findOneAndUpdate(
+            {_id:infos.id_a},
+            {   data:infos.data,
+                tipo:infos.tipo,
+                disciplina:infos.disciplina,
+                entrega:infos.entrega,
+                instrucoes:infos.orientacao,
+            }
+        )
+        res.redirect('/atividades?id='+infos.id)
+    })
 }
